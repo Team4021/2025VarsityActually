@@ -21,9 +21,9 @@ public final class Constants
 //added down
 
 public static final class CoralSubsystemConstants {
-  public static final int kElevatorMotorCanId = 4;
-  public static final int kArmMotorCanId = 3;
-  public static final int kIntakeMotorCanId = 2;
+  public static final int kElevatorMotorCanId = 31;
+  public static final int kArmMotorCanId = 34;
+  public static final int kIntakeMotorCanId = 35;
 
   public static final class ElevatorSetpoints {
     public static final int kFeederStation = 0;
@@ -48,8 +48,8 @@ public static final class CoralSubsystemConstants {
 }
 
 public static final class AlgaeSubsystemConstants {
-  public static final int kIntakeMotorCanId = 13;
-  public static final int kPivotMotorCanId = 14;
+  public static final int kIntakeMotorCanId = 33;
+  public static final int kPivotMotorCanId = 32;
 
   public static final class ArmSetpoints {
     public static final double kStow = 18.5;
