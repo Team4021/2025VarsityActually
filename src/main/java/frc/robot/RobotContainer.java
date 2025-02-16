@@ -16,6 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.AlgaeSubsystem;
+import frc.robot.subsystems.CoralSubsystem;
+import frc.robot.subsystems.CoralSubsystem.Setpoint;
+import frc.robot.Constants.OIConstants;
 
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -27,6 +31,7 @@ import swervelib.SwerveInputStream;
  */
 public class RobotContainer
 {
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(1);
@@ -87,6 +92,10 @@ public class RobotContainer
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+
+
+
+
   public RobotContainer()
   {
     // Configure the trigger bindings
@@ -101,9 +110,57 @@ public class RobotContainer
    * {@link CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
    * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
    */
+
+
+   
+   private final CoralSubsystem m_coralSubSystem = new CoralSubsystem();
+   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+
+
   private void configureBindings()
   {
 
+
+// Left Stick Button -> Set swerve to X
+
+// Left Bumper -> Run tube intake
+driverXbox.leftBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
+
+// Right Bumper -> Run tube intake in reverse
+driverXbox.rightBumper().whileTrue(m_coralSubSystem.reverseIntakeCommand());
+
+ // B Button -> Elevator/Arm to human player position, set ball intake to stow
+    // when idle
+    driverXbox
+        .b()
+        .onTrue(
+            m_coralSubSystem
+                .setSetpointCommand(Setpoint.kFeederStation)
+                .alongWith(m_algaeSubsystem.stowCommand()));
+
+    // A Button -> Elevator/Arm to level 2 position
+    driverXbox.a().onTrue(m_coralSubSystem.setSetpointCommand(Setpoint.kLevel2));
+
+    // X Button -> Elevator/Arm to level 3 position
+   driverXbox.x().onTrue(m_coralSubSystem.setSetpointCommand(Setpoint.kLevel3));
+
+    // Y Button -> Elevator/Arm to level 4 position
+    driverXbox.y().onTrue(m_coralSubSystem.setSetpointCommand(Setpoint.kLevel4));
+
+    // Right Trigger -> Run ball intake, set to leave out when idle
+    driverXbox
+        .rightTrigger(OIConstants.kTriggerButtonThreshold)
+        .whileTrue(m_algaeSubsystem.runIntakeCommand());
+
+    // Left Trigger -> Run ball intake in reverse, set to stow when idle
+    driverXbox
+        .leftTrigger(OIConstants.kTriggerButtonThreshold)
+        .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
+
+
+
+
+    
     Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
@@ -143,7 +200,7 @@ public class RobotContainer
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
     }
-
+    
   }
 
   /**

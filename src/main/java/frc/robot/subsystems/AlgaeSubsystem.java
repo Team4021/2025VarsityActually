@@ -25,6 +25,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.AlgaeSubsystemConstants;
 import frc.robot.Constants.SimulationRobotConstants;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+
+
 
 public class AlgaeSubsystem extends SubsystemBase {
   // Initialize arm SPARK. We will use MAXMotion position control for the arm, so we also need to
@@ -33,6 +37,9 @@ public class AlgaeSubsystem extends SubsystemBase {
       new SparkFlex(AlgaeSubsystemConstants.kPivotMotorCanId, MotorType.kBrushless);
   private SparkClosedLoopController armController = armMotor.getClosedLoopController();
   private RelativeEncoder armEncoder = armMotor.getEncoder();
+
+  final         CommandXboxController driverXbox = new CommandXboxController(1);
+
 
   // Initialize intake SPARK. We will use open loop control for this so we don't need a closed loop
   // controller like above.

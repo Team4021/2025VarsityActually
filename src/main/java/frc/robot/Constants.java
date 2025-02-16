@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import swervelib.math.Matter;
 
 /**
@@ -18,6 +19,26 @@ import swervelib.math.Matter;
  */
 public final class Constants
 {
+
+
+
+
+
+//Controller Buttons//Controller buttons
+  public static final         CommandXboxController driverXbox = new CommandXboxController(1);
+
+public static final int A_Button = 1;
+public static final int B_Button = 2;
+public static final int X_Button = 3;
+public static final int Y_Button = 4;
+public static final int leftBumper = 5;
+public static final int rightBumper = 6;
+
+
+
+
+
+
 //added down
 
 public static final class CoralSubsystemConstants {
@@ -34,11 +55,11 @@ public static final class CoralSubsystemConstants {
   }
 
   public static final class ArmSetpoints {
-    public static final double kFeederStation = 33;
+    public static final double kFeederStation = -33;
     public static final double kLevel1 = 0;
-    public static final double kLevel2 = 2;
-    public static final double kLevel3 = 2;
-    public static final double kLevel4 = 19;
+    public static final double kLevel2 = -2;
+    public static final double kLevel3 = -2;
+    public static final double kLevel4 = -19;
   }
 
   public static final class IntakeSetpoints {
@@ -52,8 +73,8 @@ public static final class AlgaeSubsystemConstants {
   public static final int kPivotMotorCanId = 32;
 
   public static final class ArmSetpoints {
-    public static final double kStow = 18.5;
-    public static final double kHold = 11.5;
+    public static final double kStow = -4.178;
+    public static final double kHold = -6.203;
     public static final double kDown = 0;
   }
 
@@ -149,6 +170,12 @@ public static final class ModuleConstants {
 }
 public static final class NeoMotorConstants {
   public static final double kFreeSpeedRpm = 5676;
+}
+
+public static final class OIConstants {
+  public static final int kDriverControllerPort = 0;
+  public static final double kDriveDeadband = 0.1;
+  public static final double kTriggerButtonThreshold = 0.2;
 }
 
 //added up
